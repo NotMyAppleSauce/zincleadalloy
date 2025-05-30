@@ -107,3 +107,43 @@ footer {
   background: #f4e2d8;
   border-top: 2px solid #d4a373;
 }
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  section {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  #chart-section,
+  #portfolio {
+    width: 100%;
+  }
+
+  #horse-list button {
+    width: 48%;
+    margin: 0.25rem 1%;
+    font-size: 1rem;
+  }
+
+  #news {
+    max-height: 250px;
+  }
+
+  #news-feed li {
+    font-size: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  #ticker {
+    font-size: 0.9rem;
+  }
+}
