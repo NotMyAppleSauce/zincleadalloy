@@ -1,0 +1,109 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fef9f4;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background: #f4e2d8;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 2px solid #d4a373;
+}
+
+#ticker {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #8b4513;
+  animation: ticker 20s linear infinite;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+section {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  flex: 1 1 40%;
+  min-width: 300px;
+}
+
+#horse-list .horse {
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 0;
+}
+
+#horse-list button {
+  margin: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #d4a373;
+  color: white;
+  cursor: pointer;
+}
+
+#horse-list button:hover {
+  background-color: #b97b4e;
+}
+
+#portfolio {
+  width: 90%;
+  margin: 0 auto 2rem auto;
+  background: #fff8e1;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#chart-section {
+  width: 90%;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#news {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #fffdf5;
+  border: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+#news-feed {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+#news-feed li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #f4e2d8;
+  border-top: 2px solid #d4a373;
+}
