@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Horse Market Simulator</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+    import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyABWeR2lngoKtE3X8eOnui4qJ96Q9_HNYI",
+      authDomain: "horsestockmarket.firebaseapp.com",
+      databaseURL: "https://horsestockmarket-default-rtdb.firebaseio.com",
+      projectId: "horsestockmarket",
+      storageBucket: "horsestockmarket.appspot.com",
+      messagingSenderId: "396123315845",
+      appId: "1:396123315845:web:931a8b681c4b2bfe2953ec"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // Initial horse data
+    const horses = {
+      "sir-gallops-a-lot": { name: "Sir Gallops-a-Lot", price: 120, change: "+0.0%", history: [120] },
+      "midnight-muffin": { name: "Midnight Muffin", price: 98, change: "+0.0%", history: [98] },
+      "laserhoof": { name: "Laserhoof", price: 150, change: "+0.0%", history: [150] },
+      "thunderhoof": { name: "Thunderhoof", price: 110, change: "+0.0%", history: [110] }
+    };
+
+    // News templates
+    const newsTemplates = [
+      "{horse} was seen {action} near the {location}.",
+      "BREAKING: {horse} just {event}!",
+      "Analysts predict {horse} will {prediction} by next week.",
+      "{horse} caught in a {situation}—market reacts.",
+      "Fans cheer as {horse} {achievement} during training."
+    ];
+
+    const madlibData = {
+      horse: ["Sir Gallops-a-Lot", "Midnight Muffin", "Laserhoof", "Thunderhoof"],
+      action: ["galloping wildly", "eating oats", "kicking fences", "posing for selfies"],
+      location: ["stable", "race track", "training field", "hay barn"],
+      event: ["broke a speed record", "tripped over a carrot", "neighed at the moon", "won a surprise race"],
+      prediction: ["double in value", "retire early", "become a meme", "join a unicorn league"],
+      situation: ["mudslide", "carrot heist", "fan stampede", "hay shortage"],
+      achievement: ["nailed a perfect trot", "outpaced a drone", "won a neigh-off", "jumped a fence backwards"]
+    };
+
+    function generateNewsText() {
+      const template = newsTemplates[Math.floor(Math.random() * newsTemplates.length)];
+      return template.replace(/{(.*?)}/g, (_, key) => {
+        const options = madlibData[key];
+        return options[Math.floor(Math.random() * options.length)];
+      });
+    }
+
+    // Initialize database
+    set(ref(database, 'horses'), horses);
+
+    // Update prices periodically
+    setInterval(() => {
+      Object.entries(horses).forEach(([id, horse]) => {
+        const change = (Math.random() * 10 - 5).toFixed(2);
+        const percent = (change / horse.price * 100).toFixed(2);
+        horse.price = Math.max(1, horse.price + parseFloat(change));
+        horse.change = `${change >= 0 ? '+' : ''}${percent}%`;
+        
+        // Update history
+        horse.history.push(horse.price);
+        if (horse.history.length > 10) horse.history.shift();
+      });
+      
+      set(ref(database, 'horses'), horses);
+      
+      // Generate news
+      const newsItem = { 
+        text: generateNewsText(), 
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) 
+      };
+      push(ref(database, 'news'), newsItem);
+    }, 5000);
+
+    console.log("Market simulator running...");
+  </script>
+</head>
+<body>
+  <h1>Horse Market Simulator Running</h1>
+  <p>Keep this tab open to simulate server-side updates</p>
+</body>
+</html>
